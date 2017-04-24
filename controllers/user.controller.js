@@ -2,6 +2,7 @@
 
 const User = require('./../models/user');
 const bcrypt = require('bcrypt-nodejs');
+const jwt = require('./../services/jwt');
 
 function pruebas(req, res)  {
   res.status(200).send({message:'El controlador de usuario responde correctamente'});
@@ -51,6 +52,7 @@ function saveUser( req, res ){
   }
 }
 
+// metodo de login de usuario
 function loginUser(req, res) {
   let params = req.body;
   let email = params.email;
@@ -66,6 +68,9 @@ function loginUser(req, res) {
 
       if(params.gethash){
         // devolver un token de jwt
+        res.status(200).send({
+          token: jwt.createToken(user)
+        });
       }
 
       return res.status(200).send({user});
@@ -74,9 +79,24 @@ function loginUser(req, res) {
 
 }
 
+// metodo de actualizacion de usuario
+function updateUser(req, res ) {
+  let userId = req.params.userId;
+  let update = req.body;
+
+  User.findByIdAndUpdate(userId, update, (err, userUpdated)=>{
+    if(err) res.status(500).send({message: `Error al actualizar el usuario: ${err}`});
+
+    if(!userUpdated) res.status(404).send({message: 'No se ha podido actualizar el usuario'});
+
+    res.status(200).send({user: userUpdated});
+
+  });
+}
 
 module.exports = {
   pruebas,
   saveUser,
-  loginUser
+  loginUser,
+  updateUser
 };
