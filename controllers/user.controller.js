@@ -7,7 +7,7 @@ function pruebas(req, res)  {
   res.status(200).send({message:'El controlador de usuario responde correctamente'});
 }
 
-// metodo guardar usuario
+// metodo guardar usuario NOTA: no se ha considerado aun si el usuario ya esta creado
 function saveUser( req, res ){
   let user = new User();
   //guardamos los parametros que vienen por post en el body en una variable por comodidad
@@ -51,10 +51,32 @@ function saveUser( req, res ){
   }
 }
 
+function loginUser(req, res) {
+  let params = req.body;
+  let email = params.email;
+  let password = params.password;
 
+  User.findOne({email: email.toLowerCase()}, (err, user) =>{
+    if (err) return res.status(500).send({message: `Error en la petición: ${err}`});
+
+    if(!user) return res.status(404).send({message: 'El usuario no existe en la base de datos (estas dando demasiadas pistas...mejor que pongas lo mismo el usuario no ha posido loguearse :-) )'});
+
+    bcrypt.compare(password, user.password, (err, check)=>{
+      if (err || !check) return res.status(403).send({message: 'El usuario no ha podido loguearse'});
+
+      if(params.gethash){
+        // devolver un token de jwt
+      }
+
+      return res.status(200).send({user});
+    });
+  });
+
+}
 
 
 module.exports = {
   pruebas,
-  saveUser
+  saveUser,
+  loginUser
 };
