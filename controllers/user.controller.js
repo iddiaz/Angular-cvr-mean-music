@@ -3,6 +3,7 @@
 const User = require('./../models/user');
 const bcrypt = require('bcrypt-nodejs');
 const jwt = require('./../services/jwt');
+const path = require('path');
 
 function pruebas(req, res)  {
   res.status(200).send({message:'El controlador de usuario responde correctamente'});
@@ -94,9 +95,46 @@ function updateUser(req, res ) {
   });
 }
 
+function uploadImage(req, res) {
+  let userId = req.params.id;
+  // let fileName = 'No se ha subido ningun archivo...';
+
+  //connect multiparty permite comprobar las variable superglobal files de la cabecera
+  if(req.files) {
+    let filePath = req.files.image.path;
+    let fileExtension = path.extname(filePath);
+    let fileName = path.basename(filePath, fileExtension);
+
+    if(fileExtension === '.png' || fileExtension === '.jpg' || fileExtension === '.gif') {
+      User.findByIdAndUpdate(userId,{ image: fileName }, (err, userUpdated) =>{
+        if(err || !userUpdated )
+          res.status(500).send({message: `Error al actualizar el archivo: ${err}`});
+
+        res.status(200).send({user: userUpdated});
+
+
+
+      });
+    }
+    else {
+      res.status(200).send({message: 'la extension del archivo no es válida'});
+    }
+
+    // console.log('req.files: ', req.files);
+    // console.log('file_path: ', filePath);
+    // console.log('file_extension: ', fileExtension);
+    // console.log('file_name: ', fileName);
+
+  }
+  else {
+    res.status(200).send({message: 'No has subido ninguna imagen'});
+  }
+}
+
 module.exports = {
   pruebas,
   saveUser,
   loginUser,
-  updateUser
+  updateUser,
+  uploadImage
 };
