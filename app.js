@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const app = express();
 
 // carga de rutas de aplicación
-const user_routes = require('./routes/user');
+const user_routes = require('./routes/user.routes');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 //   res.status(200).send({message: 'Servidor funcionando'});
 // });
 
-// rutas base
+// rutas base con middleware
 app.use('/api', user_routes);
 
 
