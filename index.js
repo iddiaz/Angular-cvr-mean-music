@@ -2,7 +2,8 @@
 
 const mongoose = require('mongoose');
 const app = require('./app');
-const port = process.env.PORT || 3000;
+const config = require('./config');
+
 
 //conexion a db
 mongoose.connect('mongodb://localhost:27017/cmean2', (err,res)=>{
@@ -10,8 +11,8 @@ mongoose.connect('mongodb://localhost:27017/cmean2', (err,res)=>{
 
   console.log('Conexión a la base de datos establecida correctamente...');
 
-  app.listen(port, ()=>{
-    console.log(`servidor de api rest de app musica escuchando en el puerto : ${port}`);
-  })
+  app.listen(config.port, ()=>{
+    console.log(`servidor de api rest de app musica escuchando en el puerto : ${config.port}`);
+  });
 });
 
