@@ -17,4 +17,6 @@ api.put('/update-user/:userId', md_auth.ensureAuth, UserController.updateUser);
 // usamos el md_upload para poder recoger las varialbles que nos lleguen por files
 api.post('/upload-image-user/:id', [md_auth.ensureAuth, md_upload], UserController.uploadImage);
 
+api.get('/get-image-user/:imageFile', UserController.getImageFile);
+
 module.exports = api;

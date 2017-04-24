@@ -3,7 +3,10 @@
 const User = require('./../models/user');
 const bcrypt = require('bcrypt-nodejs');
 const jwt = require('./../services/jwt');
+
+// imports de nodejs
 const path = require('path');
+const fs = require('fs');
 
 function pruebas(req, res)  {
   res.status(200).send({message:'El controlador de usuario responde correctamente'});
@@ -95,6 +98,7 @@ function updateUser(req, res ) {
   });
 }
 
+// Actualiza la imagen de avatar de usuario
 function uploadImage(req, res) {
   let userId = req.params.id;
   // let fileName = 'No se ha subido ningun archivo...';
@@ -103,7 +107,7 @@ function uploadImage(req, res) {
   if(req.files) {
     let filePath = req.files.image.path;
     let fileExtension = path.extname(filePath);
-    let fileName = path.basename(filePath, fileExtension);
+    let fileName = path.basename(filePath);
 
     if(fileExtension === '.png' || fileExtension === '.jpg' || fileExtension === '.gif') {
       User.findByIdAndUpdate(userId,{ image: fileName }, (err, userUpdated) =>{
@@ -111,19 +115,16 @@ function uploadImage(req, res) {
           res.status(500).send({message: `Error al actualizar el archivo: ${err}`});
 
         res.status(200).send({user: userUpdated});
-
-
-
       });
     }
     else {
       res.status(200).send({message: 'la extension del archivo no es válida'});
     }
 
-    // console.log('req.files: ', req.files);
-    // console.log('file_path: ', filePath);
-    // console.log('file_extension: ', fileExtension);
-    // console.log('file_name: ', fileName);
+    console.log('req.files: ', req.files);
+    console.log('file_path: ', filePath);
+    console.log('file_extension: ', fileExtension);
+    console.log('file_name: ', fileName);
 
   }
   else {
@@ -131,10 +132,39 @@ function uploadImage(req, res) {
   }
 }
 
+// devuelve imagen
+function getImageFile(req, res) {
+  let imageFile = req.params.imageFile;
+  // console.log('el filename de la peticion es ',imageFile);
+  let pathFileImg = `./uploads/users/${imageFile}`;
+  // console.log('el path de la peticion es ', pathFileImg)
+
+  //NOTA ESTO ESTA DEPRECADO YA POR LO QUE SEGUN QUE VERSIÓN DE NODEJS NO FUNCIONA
+  // fs.exists(pathFileImg, function ( exists ) {
+  //   if(exists){
+  //   //si existe lo devuelve
+  //     res.sendFile(path.resolve(pathFileImg));
+  //   }
+
+  //   res.status(200).send({message: 'El archivo no existe'});
+  // //   console.log(`esto es ./uploads/users/${fileName}`);
+  // });
+
+  // mira si existe el fichero en el servidor y lo devuelve
+  if(fs.existsSync(pathFileImg)) {
+    res.sendFile(path.resolve(pathFileImg));
+  }
+  else {
+    res.status(200).send({message: 'El archivo no existe'});
+  }
+}
+
+
 module.exports = {
   pruebas,
   saveUser,
   loginUser,
   updateUser,
-  uploadImage
+  uploadImage,
+  getImageFile
 };
