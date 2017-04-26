@@ -112,9 +112,9 @@ function uploadImage(req, res) {
     if(fileExtension === '.png' || fileExtension === '.jpg' || fileExtension === '.gif') {
       User.findByIdAndUpdate(userId,{ image: fileName }, (err, userUpdated) =>{
         if(err || !userUpdated )
-          res.status(500).send({message: `Error al actualizar el archivo: ${err}`});
+          return res.status(500).send({message: `Error al actualizar el archivo: ${err}`});
 
-        res.status(200).send({user: userUpdated});
+        res.status(200).send({image: fileName, user: userUpdated});
       });
     }
     else {
