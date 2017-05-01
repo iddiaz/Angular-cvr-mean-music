@@ -8,11 +8,13 @@ import { IdentificacionComponent } from './components/identificacion/identificac
 
 import { UserService } from './services/user.service';
 import { ConfigService } from './services/config.service';
+import { UserRegisterComponent } from './components/user-register/user-register.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    IdentificacionComponent
+    IdentificacionComponent,
+    UserRegisterComponent
   ],
   imports: [
     BrowserModule,
