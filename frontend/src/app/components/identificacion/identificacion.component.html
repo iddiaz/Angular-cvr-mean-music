@@ -1,0 +1,89 @@
+<section class="container" *ngIf="isLoged"  >
+  <h1>App de Música</h1>
+  <p>Biienvenido {{sessionUser.name}}, {{sessionUser.surname}}</p>
+  <button type="button" class="btn btn-primary" (click)="logout()">Logout</button>
+</section>
+
+<section class="container-fluid body pt-5" *ngIf="!isLoged" >
+  <div class="containerLogin">
+    <div class="row">
+      <div class="col-md-6 px-5 ">
+        <!--demo de aproximación por template-->
+        <h2>Identificación</h2>
+        <hr>
+        <div class="alert alert-info" role="alert" *ngIf="errorMessage" >
+          <p class="small">Respueta desde el servidor</p>
+          <strong>Antención! {{status}}</strong> {{errorMessage}}
+        </div>
+        <form (submit)="loginUser()" #loginForm="ngForm" novalidate>
+
+          <div class="form-group"
+              [ngClass]="{'has-danger': (email.errors?.required||email.errors?.pattern) && email.touched }">
+            <label for="email" class="small form-control-label">Correo electrónico:</label>
+            <input type="email"
+                   name="email"
+                   [(ngModel)]="userLogin.email"
+                   #email="ngModel"
+                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                   class="form-control form-control-danger"
+                   placeholder="introduce tu email"
+                   required>
+              <small class="form-control-feedback" *ngIf="email.errors?.required && email.touched" >El correo es obligatorio</small>
+              <small class="text-muted" *ngIf="email.errors?.pattern && email.touched" >El email no es valido</small>
+            </div>
+
+          <div class="form-group"
+               [ngClass]="{'has-danger': (password.errors?.required||password.errors?.minlength) && password.touched }">
+            <label for="password" class="small form-control-label">contraseña</label>
+            <input type="password"
+                   name="password"
+                   #password="ngModel"
+                   [(ngModel)]="userLogin.password"
+                   class="form-control form-control-danger"
+                   placeholder="introduce tú contraseña"
+                   minlength="4"
+                   required>
+            <small class="form-control-feedback" *ngIf="password.errors?.required && password.touched" >Introduce una contraseña</small>
+            <small class="text-muted" *ngIf="password.errors?.minlength && password.touched" >La contraseña no puede ser menor de {{password.errors.minlength.requiredLength}} caracteres</small>
+          </div>
+
+          <button [disabled]="!loginForm.valid"
+                  type="submit" class="btn btn-primary">Entrar</button>
+
+        </form>
+      </div>
+
+
+
+      <div class="col-md-6 px-5 ">
+        <h2>Registro</h2>
+        <hr>
+        <form novalidate>
+          <div class="form-group">
+            <label for="nombre" class="small">Nombre:</label>
+            <input type="text" name="name" class="form-control" placeholder="Nombre">
+          </div>
+          <div class="form-group">
+            <label for="aplellidos" class="small">Apellidos:</label>
+            <input type="text" name="surname" class="form-control" placeholder="apellidos">
+          </div>
+          <div class="form-group">
+            <label for="email" class="small">Correo Electronico:</label>
+            <input type="email" name="email" class="form-control" placeholder="introduce tu email">
+            <small class="text-muted">el email no es válido</small>
+          </div>
+          <div class="form-group">
+            <label for="password" class="small">Contraseña:</label>
+            <input type="password" name="password" class="form-control" placeholder="introduce tu password">
+            <!--<small class="text-muted">el email no es válido</small>-->
+          </div>
+        </form>
+          <button type="submit" class="btn btn-primary">Registrarse</button>
+      </div>
+    </div>
+
+
+  </div>
+
+</section>
+
