@@ -72,7 +72,7 @@ function loginUser(req, res) {
 
       if(params.gethash){
         // devolver un token de jwt
-        res.status(200).send({
+        return res.status(200).send({
           token: jwt.createToken(user)
         });
       }
