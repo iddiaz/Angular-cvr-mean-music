@@ -33,10 +33,21 @@ export class UserService {
       })
   }
 
+  register( params ){
+    let url = `${this.url}/register`;
+    params.role = 'ROLE_USER';
+    let body = params;
+    // Esto no es necesario trabajando con mongo
+    // let body = JSON.stringify( params );
+    // let headers = new Headers({'Content-type': 'application/json'});
+
+    return this.http.post(url, body ).map( res => res.json().user );
+  }
+
   getToken( params, hash ){
     let url = `${this.url}/login`;
     params.gethash = hash;
-    
+
     return this.http.post(url, params ).map(res => {
       this.token = res.json().token;
       return this.token;

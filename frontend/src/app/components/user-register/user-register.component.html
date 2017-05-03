@@ -1,6 +1,21 @@
  <h2>Registro</h2>
-<hr>
-<form [formGroup]="formRegister" (ngSubmit)="register()">
+ <hr>
+ <!--alert de registro-->
+ <div *ngIf="isRegister; then successRegister else formularioRegister"></div>
+
+ <ng-template #successRegister >
+   <div class="row align-items-center">
+     <div class="col-md-12">
+      <div class="alert alert-success">
+        <strong>Bienvenido {{userRegister.name}}!!</strong> Te has registrado correctamente en la aplicación.
+      </div>
+      <p class="lead">Logueate para acceder al contenido</p>
+     </div>
+   </div>
+</ng-template>
+
+ <ng-template class="alert alert-error" #formularioRegister >
+   <form [formGroup]="formRegister" (ngSubmit)="register()">
   <!--demo de agregacion de clase dinamicamente accediendo al campo de dos formas distintas-->
   <div class="form-group" [ngClass]="{'has-warning': !formRegister.get('name').valid && formRegister.controls['name'].touched }">
     <label for="nombre" class="small">Nombre:</label>
@@ -73,3 +88,6 @@
 
   <!--{{formRegister.valid}}-->
 </form>
+</ng-template>
+
+

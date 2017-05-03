@@ -1,7 +1,8 @@
 // aproximacion de trabajo por data
-import { UserService } from './../../services/user.service';
 import { Component, OnInit } from '@angular/core';
 import {FormGroup, FormControl, Validators } from '@angular/forms';
+import { User } from './../../models/user.model';
+import { UserService } from './../../services/user.service';
 
 @Component({
   selector: 'app-user-register',
@@ -10,8 +11,13 @@ import {FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class UserRegisterComponent implements OnInit {
 
+
   formRegister: FormGroup;
   paternMailValidation = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+  userRegister: User;
+  isRegister: boolean = false;
+
 
   constructor( private userService: UserService) {
 
@@ -31,7 +37,6 @@ export class UserRegisterComponent implements OnInit {
         this.isEqualsPasswords.bind( this.formRegister )
     ]);
 
-
   }
 
   ngOnInit() {
@@ -50,10 +55,26 @@ export class UserRegisterComponent implements OnInit {
   }
 
   register(){
-    console.log(this.formRegister.value);
-    console.log(this.formRegister);
+    // console.log(this.formRegister.value);
+    // this.userRegister = this.formRegister.value;
+    // console.log(this.formRegister);
+    // console.log('modelo de usuario', this.userRegister);
 
-    // this.formRegister.reset();
+    this.userService.register( this.formRegister.value ).subscribe(
+      res => {
+        this.userRegister = res;
+        if(this.userRegister._id) {
+          this.isRegister = true;
+
+        }
+
+      },
+      error => {
+        this.isRegister = false;
+        throw new Error (error)
+      }
+    );
+    this.formRegister.reset();
   }
 
 }
