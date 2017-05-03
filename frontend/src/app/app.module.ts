@@ -9,12 +9,14 @@ import { IdentificacionComponent } from './components/identificacion/identificac
 import { UserService } from './services/user.service';
 import { ConfigService } from './services/config.service';
 import { UserRegisterComponent } from './components/user-register/user-register.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     IdentificacionComponent,
-    UserRegisterComponent
+    UserRegisterComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
