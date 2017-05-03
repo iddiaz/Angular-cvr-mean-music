@@ -1,11 +1,10 @@
- <h2>Registro</h2>
- <hr>
+
  <!--alert de registro-->
  <div *ngIf="isRegister; then successRegister else formularioRegister"></div>
 
  <ng-template #successRegister >
-   <div class="row align-items-center">
-     <div class="col-md-12">
+   <div class="row justify-content-around mt-5">
+     <div class="col-md-6">
       <div class="alert alert-success">
         <strong>Bienvenido {{userRegister.name}}!!</strong> Te has registrado correctamente en la aplicación.
       </div>
@@ -14,80 +13,89 @@
    </div>
 </ng-template>
 
+  <!--formulario de registro-->
  <ng-template class="alert alert-error" #formularioRegister >
-   <form [formGroup]="formRegister" (ngSubmit)="register()">
-  <!--demo de agregacion de clase dinamicamente accediendo al campo de dos formas distintas-->
-  <div class="form-group" [ngClass]="{'has-warning': !formRegister.get('name').valid && formRegister.controls['name'].touched }">
-    <label for="nombre" class="small">Nombre:</label>
-    <input formControlName="name"
-           type="text"
-           class="form-control form-control-warning"
-           placeholder="Nombre">
 
-      <div class="form-control-feedback small"
-           *ngIf="formRegister.controls['name'].errors?.required && formRegister.controls['name'].touched" >El nombre es necesario</div>
+    <div class="row justify-content-around mt-5">
+      <div class="col-md-5">
+        <h2>Registro</h2>
+        <hr>
+        <form [formGroup]="formRegister" (ngSubmit)="register()">
+            <!--demo de agregacion de clase dinamicamente accediendo al campo de dos formas distintas-->
+          <div class="form-group" [ngClass]="{'has-warning': !formRegister.get('name').valid && formRegister.controls['name'].touched }">
+            <label for="nombre" class="small">Nombre:</label>
+            <input formControlName="name"
+                  type="text"
+                  class="form-control form-control-warning"
+                  placeholder="Nombre">
 
-      <div class="form-control-feedback small"
-           *ngIf="formRegister.controls['name'].errors?.minlength && formRegister.controls['name'].touched" >Por lo menos {{formRegister.controls['name'].errors?.minlength.requiredLength}} caracteres</div>
-  </div>
+              <div class="form-control-feedback small"
+                  *ngIf="formRegister.controls['name'].errors?.required && formRegister.controls['name'].touched" >El nombre es necesario</div>
 
-  <div class="form-group"
-       [ngClass]="{'has-warning': formRegister.controls['surname'].errors?.required && formRegister.controls['surname'].touched }">
-    <label for="aplellidos" class="small">Apellidos:</label>
-    <input formControlName="surname"
-           type="text"
-           class="form-control form-control-warning"
-           placeholder="apellidos">
-      <div class="form-control-feedback small"
-           *ngIf="formRegister.controls['surname'].errors?.required && formRegister.controls['surname'].touched" >El apellido es necesario</div>
-  </div>
+              <div class="form-control-feedback small"
+                  *ngIf="formRegister.controls['name'].errors?.minlength && formRegister.controls['name'].touched" >Por lo menos {{formRegister.controls['name'].errors?.minlength.requiredLength}} caracteres</div>
+          </div>
 
-  <div class="form-group"
-       [ngClass]="{'has-warning': !formRegister.get('email').valid && formRegister.get('email').touched }">
-    <label for="email" class="small">Correo Electronico:</label>
-    <input formControlName="email"
-           type="email"
-           class="form-control form-control-warning"
-           placeholder="introduce tu email">
-      <div class="form-control-feedback small"
-           *ngIf="formRegister.controls['email'].errors?.required && formRegister.controls['email'].touched" >El email es necesario</div>
-      <div class="form-control-feedback small"
-           *ngIf="formRegister.controls['email'].errors?.pattern && formRegister.controls['email'].touched" >El email no es válido</div>
-  </div>
+          <div class="form-group"
+              [ngClass]="{'has-warning': formRegister.controls['surname'].errors?.required && formRegister.controls['surname'].touched }">
+            <label for="aplellidos" class="small">Apellidos:</label>
+            <input formControlName="surname"
+                  type="text"
+                  class="form-control form-control-warning"
+                  placeholder="apellidos">
+              <div class="form-control-feedback small"
+                  *ngIf="formRegister.controls['surname'].errors?.required && formRegister.controls['surname'].touched" >El apellido es necesario</div>
+          </div>
 
-  <div class="form-group"
-       [ngClass]="{'has-warning': !formRegister.controls['password'].valid && formRegister.controls['password'].touched,
-                   'has-success': formRegister.controls['passwordSim'].valid && formRegister.controls['passwordSim'].touched }" >
-    <label for="password" class="small">Contraseña:</label>
-    <input formControlName ="password"
-           type="password"
-           class="form-control form-control-warning form-control-success"
-           placeholder="introduce tu contraseña">
-      <div class="form-control-feedback small"
-           *ngIf="formRegister.controls['password'].errors?.required && formRegister.controls['password'].touched" >La contraseña es obligatoria</div>
-      <div class="form-control-feedback small"
-           *ngIf="formRegister.controls['password'].errors?.minlength && formRegister.controls['password'].touched" >Introduce por lo menos 4 caracteres</div>
-  </div>
+          <div class="form-group"
+              [ngClass]="{'has-warning': !formRegister.get('email').valid && formRegister.get('email').touched }">
+            <label for="email" class="small">Correo Electronico:</label>
+            <input formControlName="email"
+                  type="email"
+                  class="form-control form-control-warning"
+                  placeholder="introduce tu email">
+              <div class="form-control-feedback small"
+                  *ngIf="formRegister.controls['email'].errors?.required && formRegister.controls['email'].touched" >El email es necesario</div>
+              <div class="form-control-feedback small"
+                  *ngIf="formRegister.controls['email'].errors?.pattern && formRegister.controls['email'].touched" >El email no es válido</div>
+          </div>
 
-    <div class="form-group"
-         [ngClass]="{'has-warning': !formRegister.controls['passwordSim'].valid && formRegister.controls['passwordSim'].touched,
-                     'has-success': formRegister.controls['passwordSim'].valid && formRegister.controls['passwordSim'].touched}">
-    <label for="password" class="small">Repite la contraseña:</label>
-    <input formControlName ="passwordSim"
-           type="password"
-           class="form-control form-control-warning form-control-success"
-           placeholder="Repite la contraseña">
-      <div class="form-control-feedback small"
-           *ngIf="formRegister.controls['passwordSim'].errors?.required && formRegister.get('passwordSim').touched" >Este campo es obligatorio</div>
-      <div class="form-control-feedback small"
-           *ngIf="formRegister.controls['passwordSim'].errors?.noiguales && formRegister.get('passwordSim').touched" >Las contraseñas no coinciden</div>
-  </div>
+          <div class="form-group"
+              [ngClass]="{'has-warning': !formRegister.controls['password'].valid && formRegister.controls['password'].touched,
+                          'has-success': formRegister.controls['passwordSim'].valid && formRegister.controls['passwordSim'].touched }" >
+            <label for="password" class="small">Contraseña:</label>
+            <input formControlName ="password"
+                  type="password"
+                  class="form-control form-control-warning form-control-success"
+                  placeholder="introduce tu contraseña">
+              <div class="form-control-feedback small"
+                  *ngIf="formRegister.controls['password'].errors?.required && formRegister.controls['password'].touched" >La contraseña es obligatoria</div>
+              <div class="form-control-feedback small"
+                  *ngIf="formRegister.controls['password'].errors?.minlength && formRegister.controls['password'].touched" >Introduce por lo menos 4 caracteres</div>
+          </div>
 
-  <button [disabled]="!formRegister.valid"
-          type="submit" class="btn btn-primary">Registrar</button>
+            <div class="form-group"
+                [ngClass]="{'has-warning': !formRegister.controls['passwordSim'].valid && formRegister.controls['passwordSim'].touched,
+                            'has-success': formRegister.controls['passwordSim'].valid && formRegister.controls['passwordSim'].touched}">
+            <label for="password" class="small">Repite la contraseña:</label>
+            <input formControlName ="passwordSim"
+                  type="password"
+                  class="form-control form-control-warning form-control-success"
+                  placeholder="Repite la contraseña">
+              <div class="form-control-feedback small"
+                  *ngIf="formRegister.controls['passwordSim'].errors?.required && formRegister.get('passwordSim').touched" >Este campo es obligatorio</div>
+              <div class="form-control-feedback small"
+                  *ngIf="formRegister.controls['passwordSim'].errors?.noiguales && formRegister.get('passwordSim').touched" >Las contraseñas no coinciden</div>
+          </div>
 
-  <!--{{formRegister.valid}}-->
-</form>
+          <button [disabled]="!formRegister.valid"
+                  type="submit" class="btn btn-primary">Registrar</button>
+
+          <!--{{formRegister.valid}}-->
+        </form>
+
+      </div>
+    </div>
 </ng-template>
 
 

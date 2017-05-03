@@ -1,0 +1,51 @@
+
+ <div *ngIf="isLoged; then logoutApp else formLoginApp"></div>
+
+<ng-template #logoutApp>
+  <button type="button" class="btn btn-primary btn-sm mt-2" (click)="logout()">Logout</button>
+</ng-template>
+
+<ng-template #formLoginApp >
+
+  <form class="form-inline mt-2" (submit)="loginUser()" #loginForm="ngForm" novalidate>
+
+  <div class="form-group"
+      [ngClass]="{'has-danger': (email.errors?.required||email.errors?.pattern) && email.touched }">
+    <label for="email" class="small sr-only form-control-label">Correo electrónico:</label>
+    <small class="form-control-feedback mr-2" *ngIf="email.errors?.required && email.touched" >El correo es obligatorio</small>
+    <small class="text-muted mr-2" *ngIf="email.errors?.pattern && email.touched" >El email no es valido</small>
+    <div class="input-group-addon form-control-sm">@</div>
+    <input type="email"
+            name="email"
+            [(ngModel)]="userLogin.email"
+            #email="ngModel"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+            class="form-control form-control-sm mb-2 mr-sm-2 mb-sm-0 form-control-danger"
+            placeholder="introduce tu email"
+            required> <br>
+
+    </div>
+
+  <div class="form-group"
+        [ngClass]="{'has-danger': (password.errors?.required||password.errors?.minlength) && password.touched }">
+    <label for="password" class="small sr-only form-control-label">contraseña</label>
+    <small class="form-control-feedback mr-2" *ngIf="password.errors?.required && password.touched" >Introduce una contraseña</small>
+    <small class="text-muted mr-2" *ngIf="password.errors?.minlength && password.touched" >La contraseña no puede ser menor de {{password.errors.minlength.requiredLength}} caracteres</small>
+    <input type="password"
+            name="password"
+            #password="ngModel"
+            [(ngModel)]="userLogin.password"
+            class="form-control form-control-sm mb-2 mr-sm-2 mb-sm-0 form-control-danger"
+            placeholder="introduce tú contraseña"
+            minlength="4"
+            required>
+  </div>
+
+  <button [disabled]="!loginForm.valid"
+          type="submit" class="btn btn-primary btn-sm">Entrar</button>
+
+</form>
+
+
+</ng-template>
+
