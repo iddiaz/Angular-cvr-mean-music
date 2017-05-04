@@ -88,7 +88,8 @@ function updateUser(req, res ) {
   let userId = req.params.userId;
   let update = req.body;
 
-  User.findByIdAndUpdate(userId, update, (err, userUpdated)=>{
+  // para que devuvla el objeto actualizado directamente se añade {new: true} como parametro a la consulta
+  User.findByIdAndUpdate(userId, update, {new:true}, (err, userUpdated)=>{
     if(err) res.status(500).send({message: `Error al actualizar el usuario: ${err}`});
 
     if(!userUpdated) res.status(404).send({message: 'No se ha podido actualizar el usuario'});
