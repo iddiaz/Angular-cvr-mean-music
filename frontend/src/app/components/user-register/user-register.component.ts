@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 // aproximacion de trabajo por data
 import { Component, OnInit } from '@angular/core';
 import {FormGroup, FormControl, Validators } from '@angular/forms';
@@ -17,9 +18,10 @@ export class UserRegisterComponent implements OnInit {
 
   userRegister: User;
   isRegister: boolean = false;
+  sessionToken: string;
 
 
-  constructor( private userService: UserService) {
+  constructor( private userService: UserService, private router: Router ) {
 
     this.formRegister = new FormGroup({
       'name': new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -37,9 +39,20 @@ export class UserRegisterComponent implements OnInit {
         this.isEqualsPasswords.bind( this.formRegister )
     ]);
 
+
+
+    
+
   }
 
   ngOnInit() {
+    
+      this.sessionToken = this.userService.getStoredToken();
+      // console.log('LA SESSION ES:', this.sessionToken );
+      if(this.sessionToken){
+        this.router.navigate(['home']);
+      }
+    
   }
 
   isEqualsPasswords( control: FormControl ): { [s:string]:boolean } {
