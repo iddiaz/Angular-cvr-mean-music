@@ -29,6 +29,7 @@ export class UserService {
     return this.http.post(url, body, {headers})
       .map(res => {
         this.userData = res.json().user;
+        // console.log('En EL servicio',this.userData);
         return this.userData;
       })
   }
@@ -42,6 +43,18 @@ export class UserService {
     // let headers = new Headers({'Content-type': 'application/json'});
 
     return this.http.post(url, body ).map( res => res.json().user );
+  }
+
+  updateUser( params ) {
+    let url =`${this.url}/update-user/${params._id}`;
+    let body = JSON.stringify( params );
+    let headers = new Headers({
+      'Content-type': 'application/json',
+      'Authorization': this.getStoredToken()
+    });
+    
+    return this.http.put(url, body,{headers}).map( res => res.json().user );
+
   }
 
   getToken( params, hash ){
@@ -65,6 +78,12 @@ export class UserService {
 
   getStoredUSer(){
     return JSON.parse(localStorage.getItem('sessionUser'));
+  }
+
+  setStoredUser(userData){
+    console.log('se han actualizado los datos en localstorage');
+    return localStorage.setItem('sessionUser', JSON.stringify(userData));
+    
   }
 
   getStoredToken(){

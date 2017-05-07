@@ -1,3 +1,97 @@
-<p>
-  user-seting works!
-</p>
+
+
+  <!--formulario de registro-->
+
+
+  <div class="container">
+    <div class="row">
+      <h1  class="mt-5 text-md-center">{{title}}</h1>
+    </div>
+    <div class="row mt-5 justify-content-center">
+        <div class="col-12 col-sm-12 col-md-6">
+            <h2 class="lead">Actualización de datos personales de usuario</h2>
+            <div class="alert alert-success" role="alert" *ngIf="alertMessage" >
+                 {{alertMessage}}.
+            </div>
+            <hr>
+            <form [formGroup]="formUserSeting" (ngSubmit)="updateUser()">
+                <!--demo de agregacion de clase dinamicamente accediendo al campo de dos formas distintas-->
+              <div class="form-group" [ngClass]="{'has-warning': !formUserSeting.get('name').valid && formUserSeting.controls['name'].touched }">
+                <label for="nombre" class="small">Nombre:</label>
+                <input formControlName="name"
+                      type="text"
+                      class="form-control form-control-warning form-control-sm"
+                      placeholder="Nombre">
+    
+                  <div class="form-control-feedback small"
+                      *ngIf="formUserSeting.controls['name'].errors?.required && formUserSeting.controls['name'].touched" >El nombre es necesario</div>
+    
+                  <div class="form-control-feedback small"
+                      *ngIf="formUserSeting.controls['name'].errors?.minlength && formUserSeting.controls['name'].touched" >Por lo menos {{formUserSeting.controls['name'].errors?.minlength.requiredLength}} caracteres</div>
+              </div>
+    
+              <div class="form-group"
+                  [ngClass]="{'has-warning': formUserSeting.controls['surname'].errors?.required && formUserSeting.controls['surname'].touched }">
+                <label for="aplellidos" class="small">Apellidos:</label>
+                <input formControlName="surname"
+                      type="text"
+                      class="form-control form-control-warning"
+                      placeholder="apellidos">
+                  <div class="form-control-feedback small"
+                      *ngIf="formUserSeting.controls['surname'].errors?.required && formUserSeting.controls['surname'].touched" >El apellido es necesario</div>
+              </div>
+    
+              <div class="form-group"
+                  [ngClass]="{'has-warning': !formUserSeting.get('email').valid && formUserSeting.get('email').touched }">
+                <label for="email" class="small">Correo Electronico:</label>
+                <input formControlName="email"
+                      type="email"
+                      class="form-control form-control-warning"
+                      placeholder="introduce tu email">
+                  <div class="form-control-feedback small"
+                      *ngIf="formUserSeting.controls['email'].errors?.required && formUserSeting.controls['email'].touched" >El email es necesario</div>
+                  <div class="form-control-feedback small"
+                      *ngIf="formUserSeting.controls['email'].errors?.pattern && formUserSeting.controls['email'].touched" >El email no es válido</div>
+              </div>
+    
+              <!--<div class="form-group"
+                  [ngClass]="{'has-warning': !formUserSeting.controls['password'].valid && formUserSeting.controls['password'].touched,
+                              'has-success': formUserSeting.controls['passwordSim'].valid && formUserSeting.controls['passwordSim'].touched }" >
+                <label for="password" class="small">Contraseña:</label>
+                <input formControlName ="password"
+                      type="password"
+                      class="form-control form-control-warning form-control-success"
+                      placeholder="introduce tu contraseña">
+                  <div class="form-control-feedback small"
+                      *ngIf="formUserSeting.controls['password'].errors?.required && formUserSeting.controls['password'].touched" >La contraseña es obligatoria</div>
+                  <div class="form-control-feedback small"
+                      *ngIf="formUserSeting.controls['password'].errors?.minlength && formUserSeting.controls['password'].touched" >Introduce por lo menos 4 caracteres</div>
+              </div>-->
+    
+                <!--<div class="form-group"
+                    [ngClass]="{'has-warning': !formUserSeting.controls['passwordSim'].valid && formUserSeting.controls['passwordSim'].touched,
+                                'has-success': formUserSeting.controls['passwordSim'].valid && formUserSeting.controls['passwordSim'].touched}">
+                <label for="password" class="small">Repite la contraseña:</label>
+                <input formControlName ="passwordSim"
+                      type="password"
+                      class="form-control form-control-warning form-control-success"
+                      placeholder="Repite la contraseña">
+                  <div class="form-control-feedback small"
+                      *ngIf="formUserSeting.controls['passwordSim'].errors?.required && formUserSeting.get('passwordSim').touched" >Este campo es obligatorio</div>
+                  <div class="form-control-feedback small"
+                      *ngIf="formUserSeting.controls['passwordSim'].errors?.noiguales && formUserSeting.get('passwordSim').touched" >Las contraseñas no coinciden</div>
+              </div>-->
+    
+              <button 
+                      type="submit" class="btn btn-primary btn-block btn-sm mt-4">Actualizar datos</button>
+                      <!--[disabled]="!formUserSeting.valid"-->
+    
+              <!--{{formUserSeting.valid}}-->
+            </form>          
+        </div>
+    </div>
+  </div>      
+             
+              
+             
+
