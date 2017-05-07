@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { User } from './../../models/user.model';
 import { NgForm } from '@angular/forms/src/directives';
 
 import { UserService } from './../../services/user.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -22,8 +24,14 @@ export class LoginComponent implements OnInit {
   errorMessage: string;
   status: string;
 
+ 
+  @Output() userSessionSending = new EventEmitter();
+  // @Output() tokenSending = new EventEmitter();
 
-  constructor( private userService: UserService) {}
+
+  
+
+  constructor( private userService: UserService, private router: Router) {}
 
   ngOnInit() {
     this.sessionUser = this.userService.getStoredUSer();
@@ -50,7 +58,16 @@ export class LoginComponent implements OnInit {
           this.userService.storeData( this.sessionUser, this.sessionToken );
           this.isLoged = true;
 
-          // Navegar a la página de usuario
+          // Navegar a la página principal
+          this.router.navigate( ['home'] );
+          
+          // emitir valor de nombre de usuario y token 
+           this.userSessionSending.emit( this.sessionUser );
+          //  this.tokenSending.emit(this.sessionToken);
+
+          // Reiniciamos el formulario
+          this.userLogin.email = null;
+          this.userLogin.password = null;
 
         } );
       }
@@ -64,6 +81,7 @@ export class LoginComponent implements OnInit {
   logout() {
     this.userService.clearLocalSession();
     this.isLoged = false;
+    this.router.navigate(['']);
   }
 
 }

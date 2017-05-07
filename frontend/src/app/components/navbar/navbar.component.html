@@ -9,7 +9,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <a class="navbar-brand"
-     href="#">Musicalista</a>
+     href="#">Musicalista App</a>
   <div class="collapse navbar-collapse"
        id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
@@ -22,12 +22,16 @@
            routerLinkActive="active"
            [routerLink]="['setings']">Setings</a>
       </li>
-      <li class="nav-item">
+      <!--<li class="nav-item">
         <a class="nav-link disabled"
            href="#">Disabled</a>
-      </li>
+      </li>-->
     </ul>
-    <app-login></app-login>
+    <ul class="navbar-nav ml-auto" *ngIf="userSession" >
+      <li id="nameUserSession" class="nav-link">Bienvenido {{userSession.name}}</li>
+    </ul>
+    <app-login (userSessionSending)="reciverUSerData($event)" ></app-login>
+    
     <!--<form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="text" placeholder="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
