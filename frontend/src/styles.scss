@@ -4,3 +4,7 @@ $color :lightgrey;
 body{
   background: $color;
 }
+
+.active{
+  border-bottom: 4px solid green;
+  }
