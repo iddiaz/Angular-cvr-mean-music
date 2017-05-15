@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
-import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/map';
 // import { Observable } from 'rxjs/observable';
 import { ConfigService } from './config.service';
 import { User } from './../models/user.model';
+import { Subject } from 'rxjs/Rx';
 
 
 @Injectable()
@@ -14,11 +15,15 @@ export class UserService {
   sessionUser: any;
   sessionToken: any;
   isLoaded;
+  settingsUser$ = new Subject<User>();
+  
 
   constructor( private http: Http, private config: ConfigService) {
     this.url = config.GLOBAL.url;
 
   }
+
+
   // envia los datos del formulario de login al servidor
   singUp( params: User ) {
     // url de petición
@@ -29,7 +34,6 @@ export class UserService {
     return this.http.post(url, body, {headers})
       .map(res => {
         this.userData = res.json().user;
-        // console.log('En EL servicio',this.userData);
         return this.userData;
       })
   }
@@ -93,6 +97,23 @@ export class UserService {
   clearLocalSession(){
     localStorage.removeItem('sessionUser');
     localStorage.removeItem('sessionToken');
+  }
+  
+  uploadImageFile( params ) {
+    let url = `${this.url}/upload-image-user/${params._id}`;
+    let body = JSON.stringify(params);
+    let headers = new Headers({
+      'Content-type': 'application/json',
+      'Authorization': this.getStoredToken()
+
+    })
+    return this.http.post(url,body,{headers}).map( res => res.json().user)
+
+  }
+
+  // transmitiendo datos de usuario entre componentes
+  settingUserProfile$( data: User ) {
+    this.settingsUser$.next( data );
   }
 
 

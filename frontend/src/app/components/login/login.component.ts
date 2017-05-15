@@ -19,19 +19,13 @@ export class LoginComponent implements OnInit {
     password: null,
   };
   isLoged: boolean = false;
-  sessionUser: any;
+  sessionUser: User;
   sessionToken: string;
   errorMessage: string;
   status: string;
-
  
-  @Output() userSessionSending = new EventEmitter();
-  // @Output() tokenSending = new EventEmitter();
 
-
-  
-
-  constructor( private userService: UserService, private router: Router) {}
+  constructor( private userService: UserService, private router: Router ) {}
 
   ngOnInit() {
     this.sessionUser = this.userService.getStoredUSer();
@@ -39,9 +33,9 @@ export class LoginComponent implements OnInit {
 
     if(this.sessionUser){
       this.isLoged = true;
+      this.userService.settingUserProfile$( this.sessionUser );
+
     }
-    console.log('sessionUser: ',this.sessionUser);
-    console.log('sessionToken: ',this.sessionToken);
 
   }
 
@@ -58,13 +52,12 @@ export class LoginComponent implements OnInit {
           this.userService.storeData( this.sessionUser, this.sessionToken );
           this.isLoged = true;
 
+          //Emitimos datos de sesión para el componente que le interese.
+          this.userService.settingUserProfile$( this.sessionUser );
+
           // Navegar a la página principal
           this.router.navigate( ['home'] );
           
-          // emitir valor de nombre de usuario y token 
-           this.userSessionSending.emit( this.sessionUser );
-          //  this.tokenSending.emit(this.sessionToken);
-
           // Reiniciamos el formulario
           this.userLogin.email = null;
           this.userLogin.password = null;
@@ -81,7 +74,11 @@ export class LoginComponent implements OnInit {
   logout() {
     this.userService.clearLocalSession();
     this.isLoged = false;
-    this.router.navigate(['']);
+    this.router.navigate(['']); 
+    //Emitimos datos de sesión a toda la aplicacion
+    this.sessionUser = null;
+    this.sessionToken = null;
+    this.userService.settingUserProfile$( this.sessionUser );
   }
 
 }

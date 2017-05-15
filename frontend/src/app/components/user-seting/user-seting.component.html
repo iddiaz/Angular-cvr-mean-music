@@ -52,36 +52,20 @@
                       *ngIf="formUserSeting.controls['email'].errors?.required && formUserSeting.controls['email'].touched" >El email es necesario</div>
                   <div class="form-control-feedback small"
                       *ngIf="formUserSeting.controls['email'].errors?.pattern && formUserSeting.controls['email'].touched" >El email no es válido</div>
-              </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div *ngIf="userData.image">
+                        <img class="rounded img-thumbnail" [src]=" urlGetImage +'/get-image-user/'+userData.image " [alt]="userData.name + ' ' + userData.surname">
+                    </div>
+                <label for="email" class="small">Subir archivo de imagen:</label>
+                <input type="file"
+                      class="form-control form-control-warning form-control-sm"
+                      (change)="filechangeEvent($event)">              
+                </div>
     
-              <!--<div class="form-group"
-                  [ngClass]="{'has-warning': !formUserSeting.controls['password'].valid && formUserSeting.controls['password'].touched,
-                              'has-success': formUserSeting.controls['passwordSim'].valid && formUserSeting.controls['passwordSim'].touched }" >
-                <label for="password" class="small">Contraseña:</label>
-                <input formControlName ="password"
-                      type="password"
-                      class="form-control form-control-warning form-control-success"
-                      placeholder="introduce tu contraseña">
-                  <div class="form-control-feedback small"
-                      *ngIf="formUserSeting.controls['password'].errors?.required && formUserSeting.controls['password'].touched" >La contraseña es obligatoria</div>
-                  <div class="form-control-feedback small"
-                      *ngIf="formUserSeting.controls['password'].errors?.minlength && formUserSeting.controls['password'].touched" >Introduce por lo menos 4 caracteres</div>
-              </div>-->
-    
-                <!--<div class="form-group"
-                    [ngClass]="{'has-warning': !formUserSeting.controls['passwordSim'].valid && formUserSeting.controls['passwordSim'].touched,
-                                'has-success': formUserSeting.controls['passwordSim'].valid && formUserSeting.controls['passwordSim'].touched}">
-                <label for="password" class="small">Repite la contraseña:</label>
-                <input formControlName ="passwordSim"
-                      type="password"
-                      class="form-control form-control-warning form-control-success"
-                      placeholder="Repite la contraseña">
-                  <div class="form-control-feedback small"
-                      *ngIf="formUserSeting.controls['passwordSim'].errors?.required && formUserSeting.get('passwordSim').touched" >Este campo es obligatorio</div>
-                  <div class="form-control-feedback small"
-                      *ngIf="formUserSeting.controls['passwordSim'].errors?.noiguales && formUserSeting.get('passwordSim').touched" >Las contraseñas no coinciden</div>
-              </div>-->
-    
+
               <button 
                       type="submit" class="btn btn-primary btn-block btn-sm mt-4">Actualizar datos</button>
                       <!--[disabled]="!formUserSeting.valid"-->

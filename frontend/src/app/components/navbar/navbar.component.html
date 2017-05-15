@@ -22,15 +22,19 @@
            routerLinkActive="active"
            [routerLink]="['setings']">Setings</a>
       </li>
-      <!--<li class="nav-item">
+      <!--<li class="nav-item"></li>
         <a class="nav-link disabled"
            href="#">Disabled</a>
       </li>-->
     </ul>
     <ul class="navbar-nav ml-auto" *ngIf="userSession" >
-      <li id="nameUserSession" class="nav-link">Bienvenido {{userSession.name}}</li>
+      <li id="nameUserSession" class="nav-link">{{userSession.name}} {{userSession.surname}}</li>
+      <li  class="nav-link">
+        <img *ngIf="urlImagenProfile"  class="img-profile" [src]="urlImagenProfile" [alt]="userSession.name + ' '+ userSession.surname">
+      </li>
     </ul>
-    <app-login (userSessionSending)="reciverUSerData($event)" ></app-login>
+    <!--<app-login (userSessionSending)="reciverUSerData($event)" ></app-login>-->
+    <app-login></app-login>
     
     <!--<form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="text" placeholder="Search">
