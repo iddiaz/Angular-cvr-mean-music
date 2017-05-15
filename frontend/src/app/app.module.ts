@@ -19,6 +19,9 @@ import { AuthService } from './services/auth-service.service';
 // Routes
 import { APP_ROUTING } from './app.routes';
 import { UserSetingComponent } from './components/user-seting/user-seting.component';
+import { ArtistasComponent } from './components/artistas/artistas.component';
+import { AlbumsComponent } from './components/albums/albums.component';
+import { BuscarComponent } from './components/buscar/buscar.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,10 @@ import { UserSetingComponent } from './components/user-seting/user-seting.compon
     NavbarComponent,
     LoginComponent,
     HomeComponent,
-    UserSetingComponent
+    UserSetingComponent,
+    ArtistasComponent,
+    AlbumsComponent,
+    BuscarComponent
   ],
   imports: [
     BrowserModule,
