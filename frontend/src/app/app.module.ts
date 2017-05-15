@@ -14,6 +14,7 @@ import { LoginComponent } from './components/login/login.component';
 // Services
 import { UserService } from './services/user.service';
 import { ConfigService } from './services/config.service';
+import { AuthService } from './services/auth-service.service';
 
 // Routes
 import { APP_ROUTING } from './app.routes';
@@ -38,7 +39,8 @@ import { UserSetingComponent } from './components/user-seting/user-seting.compon
   ],
   providers: [
     UserService,
-    ConfigService
+    ConfigService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

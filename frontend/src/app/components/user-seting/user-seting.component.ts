@@ -33,9 +33,9 @@ export class UserSetingComponent implements OnInit {
     this.userToken = this.userService.getStoredToken();
     this.url = `${this.config.GLOBAL.url}/upload-image-user/${this.userData._id}`;
     this.urlGetImage = `${this.config.GLOBAL.url}`;
-
-
-    this.formUserSeting = new FormGroup ({
+    
+    if( this.userData){
+      this.formUserSeting = new FormGroup ({
       '_id': new FormControl (this.userData._id),
       'token': new FormControl(this.userToken),
       'name': new FormControl(this.userData.name, Validators.required),
@@ -49,6 +49,8 @@ export class UserSetingComponent implements OnInit {
       // 'passwordSim': new FormControl()
 
     })
+
+    }
 
    }
 
