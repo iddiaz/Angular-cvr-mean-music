@@ -22,6 +22,8 @@ import { UserSetingComponent } from './components/user-seting/user-seting.compon
 import { ArtistasComponent } from './components/artistas/artistas.component';
 import { AlbumsComponent } from './components/albums/albums.component';
 import { BuscarComponent } from './components/buscar/buscar.component';
+import { ErrorPageComponent } from './components/error-page/error-page.component';
+
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { BuscarComponent } from './components/buscar/buscar.component';
     UserSetingComponent,
     ArtistasComponent,
     AlbumsComponent,
-    BuscarComponent
+    BuscarComponent,
+    ErrorPageComponent
   ],
   imports: [
     BrowserModule,

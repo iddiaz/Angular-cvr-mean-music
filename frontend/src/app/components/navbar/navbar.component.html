@@ -23,7 +23,7 @@
       </li>
       <li class="nav-item" routerLinkActive="active">
         <a [routerLink]="['artistas']"
-           class="nav-link">artistas</a>
+           class="nav-link">Artistas</a>
       </li>
       <li class="nav-item" routerLinkActive="active">
         <a [routerLink]="['albums']"
@@ -32,8 +32,8 @@
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link"
            *ngIf="userSession"
-           routerLinkActive="active"
-           [routerLink]="['setings']">Setings</a>
+           [routerLink]="['setings']">
+           <i class="fa fa-cog fa-fw"></i> Mis datos</a>
       </li>
       <!--<li class="nav-item"></li>
         <a class="nav-link disabled"

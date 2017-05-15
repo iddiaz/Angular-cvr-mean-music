@@ -8,6 +8,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ArtistasComponent } from './components/artistas/artistas.component';
 import { AlbumsComponent } from './components/albums/albums.component';
 import { BuscarComponent } from './components/buscar/buscar.component';
+import { ErrorPageComponent } from './components/error-page/error-page.component';
 
 const routes: Routes = [
   { path: '', component: UserRegisterComponent },
@@ -16,7 +17,7 @@ const routes: Routes = [
   { path: 'artistas', component: ArtistasComponent },
   { path: 'albums', component: AlbumsComponent },
   { path: 'setings', component: UserSetingComponent, canActivate: [AuthService] },
-  { path: '**', pathMatch:'full', redirectTo: '/' }
+  { path: '**', pathMatch: 'full', component: ErrorPageComponent },
 ];
 
 export const APP_ROUTING = RouterModule.forRoot(routes);

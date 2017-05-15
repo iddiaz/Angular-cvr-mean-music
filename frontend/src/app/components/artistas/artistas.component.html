@@ -1,3 +1,74 @@
-<p>
-  artistas works!
-</p>
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-3">{{title}}</h1>
+    <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+    <button *ngIf="userSession?.role == 'ROLE_ADMIN'"type="button" class="btn btn-primary " (click)="formModalArtista()">
+      <i class="fa fa-dropbox"></i>
+      Añadir artista</button>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-8">
+
+
+    </div>
+  </div>
+
+</div>
+
+
+
+<div class="modal fade" id="frmModalArtist" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Añadir nuevo artista</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <!--Aproximacion por template-->       
+
+        <form #formArtist="ngForm" (ngSubmit)="guardarArtista( formArtist )" novalidate>
+          <div class="form-group" [ngClass]="{'has-warning': nombre.errors?.required && nombre.touched }">
+            <label for="name" class="form-control-label">Nombre:</label>
+            <input type="text"
+                   name="nombre"
+                   [(ngModel)]="artist.name"                                   
+                   class="form-control form-control-warning"
+                   #nombre="ngModel"  
+                   required>
+                <div *ngIf="nombre.errors?.required && nombre.touched" 
+                     class="form-control-feedback small">
+                  El nombre es obligatorio
+                </div>
+          </div>
+          <div class="form-group" [ngClass]="{'has-warning': descripcion.errors?.required && descripcion.touched }">
+            <label for="description" class="form-control-label">Descripción del Artista:</label>
+            <textarea class="form-control form-control-warning"
+              name="description"
+              [(ngModel)]="artist.description"
+              #descripcion="ngModel"
+              required>
+            </textarea>
+             <div *ngIf="descripcion.errors?.required && descripcion.touched" 
+                     class="form-control-feedback small">
+                  Este campo es necesario
+                </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary" [disabled]="formArtist.invalid">Guardar artista</button>
+            <!--{{formArtist.valid | json}}-->
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
