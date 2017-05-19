@@ -10,11 +10,14 @@ import { HomeComponent } from './components/home/home.component';
 import { UserRegisterComponent } from './components/user-register/user-register.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginComponent } from './components/login/login.component';
+import { EditarArtistaComponent } from './components/artistas/editar-artista.component';
 
 // Services
 import { UserService } from './services/user.service';
 import { ConfigService } from './services/config.service';
 import { AuthService } from './services/auth-service.service';
+import { ArtistService } from './services/artist.service';
+import { UploadService } from './services/upload.service';
 
 // Routes
 import { APP_ROUTING } from './app.routes';
@@ -37,7 +40,8 @@ import { ErrorPageComponent } from './components/error-page/error-page.component
     ArtistasComponent,
     AlbumsComponent,
     BuscarComponent,
-    ErrorPageComponent
+    ErrorPageComponent,
+    EditarArtistaComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +53,9 @@ import { ErrorPageComponent } from './components/error-page/error-page.component
   providers: [
     UserService,
     ConfigService,
-    AuthService
+    AuthService,
+    ArtistService,
+    UploadService
   ],
   bootstrap: [AppComponent]
 })

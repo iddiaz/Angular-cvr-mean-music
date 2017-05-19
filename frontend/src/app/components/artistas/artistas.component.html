@@ -5,19 +5,38 @@
     <button *ngIf="userSession?.role == 'ROLE_ADMIN'"type="button" class="btn btn-primary " (click)="formModalArtista()">
       <i class="fa fa-dropbox"></i>
       Añadir artista</button>
+  
   </div>
 </div>
 
-
-<div class="container">
+<!--cards artista-->
+<div class="container-fluid">
   <div class="row">
-    <div class="col-8">
+    <div class="col-12">
+      <div class="card-deck">
 
+        <div class="card" *ngFor="let artist of artistService.artistas">
+          <img class="card-img-top imgArtist" src="./assets/noimage.png" alt="Card image cap">
+          <div class="card-block ">
+            <h4 class="card-title">{{artist.name}}</h4>
+            <p class="card-text">{{artist.description}}</p>            
+            <button *ngIf="userSession?.role == 'ROLE_ADMIN'" type="button" class="btn btn-success btn-sm m-2" (click)="editarArtista(artist._id)"><i class="fa fa-edit"></i> Editar</button>
+            <button *ngIf="userSession?.role == 'ROLE_ADMIN'" type="button" class="btn btn-danger btn-sm" (click)="borrarArtista(artist._id)"><i class="fa fa-dropbox"></i>Borrar</button>              
+            
+          </div>        
+        </div>       
+
+      </div>
 
     </div>
   </div>
-
 </div>
+
+   
+  
+
+
+
 
 
 

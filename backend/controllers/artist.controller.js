@@ -47,7 +47,7 @@ function saveArtist (req, res) {
 
   artist.name = params.name;
   artist.description = params.description;
-  artist.image = 'null';
+  artist.image = null;
 
   artist.save( (err, artistStored )=>{
     if(err) res.status(500).send({message: `Error al guardar el artista ${err}`});

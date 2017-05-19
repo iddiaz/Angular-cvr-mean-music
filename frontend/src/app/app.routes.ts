@@ -9,12 +9,14 @@ import { ArtistasComponent } from './components/artistas/artistas.component';
 import { AlbumsComponent } from './components/albums/albums.component';
 import { BuscarComponent } from './components/buscar/buscar.component';
 import { ErrorPageComponent } from './components/error-page/error-page.component';
+import { EditarArtistaComponent } from './components/artistas/editar-artista.component';
 
 const routes: Routes = [
   { path: '', component: UserRegisterComponent },
   { path: 'home', component: HomeComponent },
   { path: 'buscar', component: BuscarComponent },
   { path: 'artistas', component: ArtistasComponent },
+  { path: 'artista/:idArtist', component: EditarArtistaComponent },
   { path: 'albums', component: AlbumsComponent },
   { path: 'setings', component: UserSetingComponent, canActivate: [AuthService] },
   { path: '**', pathMatch: 'full', component: ErrorPageComponent },
