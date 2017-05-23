@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from './../../services/user.service';
 import { ArtistService } from './../../services/artist.service';
+import { UploadService } from './../../services/upload.service';
 
 @Component({
   selector: 'app-editar-artista',
@@ -34,8 +35,8 @@ import { ArtistService } from './../../services/artist.service';
           </div>
 
           <div class="form-group" *ngIf="artist.image">
-            <label for="description" class="form-control-label">Imagen del Artista:</label>
-            <img [src]="urlImageArtist" alt="">
+            <label for="description" class="form-control-label">Imagen del Artista:</label><br>
+            <img class="imgEdit" [src]="urlImageArtist" alt="">
           </div>
 
           <label for="image" class="form-control-label">Editar Imagen:</label>
@@ -51,7 +52,11 @@ import { ArtistService } from './../../services/artist.service';
     </div>
   </div>
   `,
-  styles: []
+  styles: [`
+   .imgEdit{
+     width:400px;
+   }
+ `]
 })
 export class EditarArtistaComponent implements OnInit {
 
@@ -61,12 +66,15 @@ export class EditarArtistaComponent implements OnInit {
     image: null
   }
   urlImageArtist: string;
+  urlImageToUpload: string;
   userToken: string = this.userService.getStoredToken();
   message: string;
+  filesToUpload: Array<File>;
 
   constructor(
     private artistService: ArtistService, 
     private userService: UserService, 
+    private uploadService: UploadService,
     private activatedRoute: ActivatedRoute, 
     private router: Router ) { }
 
@@ -74,17 +82,20 @@ export class EditarArtistaComponent implements OnInit {
     // console.log(this.userToken);
     this.activatedRoute.params.subscribe(res =>{
       let idArtist = res.idArtist;
-      // console.log('El id del artista es', idArtist);
+     
       this.artistService.getArtist(this.userToken, idArtist ).subscribe( res => {
         this.artist = res;
-        console.log('en el componente', res);
-      });
-      // this.getArtist()
-      
-      if (this.artist.image){
+        console.log('EL ARTISTA AL INICO',this.artist);
+       
+        this.urlImageToUpload = `${this.artistService.urlPpal}/upload-image-artist/${idArtist}`;
+        
+        if (this.artist.image){
         this.urlImageArtist = `${this.artistService.urlPpal}/get-image-artist/${this.artist.image}`;
-        // console.log(this.urlImageArtist);
       }
+        
+      });
+      
+ 
 
     });
 
@@ -93,7 +104,23 @@ export class EditarArtistaComponent implements OnInit {
   saveArtist(){
    
     this.artistService.setUpdateArtist(this.userToken, this.artist).subscribe( res =>{
-      // console.log(res.status);
+      this.artist = res.artist;
+
+      console.log(this.filesToUpload);
+        
+      if(this.filesToUpload) {
+        this.uploadService.makeFileRequest(this.urlImageToUpload, this.userToken,[], this.filesToUpload, 'image')
+        .then( result => {
+          console.log( 'resultado de subir el archivo', result );
+          // this.artist.image = result.artist.image;
+        },
+        error => console.log(error))
+
+      }
+      // la actualizacion de los datos debería ser en tiempo real y dinamica sin recarga de página
+      window.location.reload();     
+       
+
       if(res.status === 200) {
         this.message = 'El artista se ha actualizado corractamente'
       } else {
@@ -111,9 +138,12 @@ export class EditarArtistaComponent implements OnInit {
   volver(){
     this.router.navigate(['artistas'])
   }
+  
+  // recoge valor de imagen adjuntada
+  setFile(fileInput: any ){
+    this.filesToUpload = fileInput.target.files;
+    console.log('LOQUE SE VA A SUBIR',this.filesToUpload);
 
-  setFile(event){
-    console.log(event);
   }
 
 }

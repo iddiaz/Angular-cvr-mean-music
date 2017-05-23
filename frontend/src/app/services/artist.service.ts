@@ -77,7 +77,12 @@ export class ArtistService {
       'Content-type': 'application/json',
       'Authorization': token
     });
-    return this.http.put(url, body, {headers}).map(res => res)
+    return this.http.put(url, body, {headers}).map(res => {
+      return {
+        artist : res.json().artist,
+        status: res.status
+      } 
+    })
   }
 
   // Elimina un artista

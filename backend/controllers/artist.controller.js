@@ -61,7 +61,7 @@ function updateArtist (req, res) {
   let artistId = req.params.artistId;
   let update = req.body;
 
-  Artist.findByIdAndUpdate(artistId, update, (err, artistUpdated)=>{
+  Artist.findByIdAndUpdate(artistId, update, {new:true}, (err, artistUpdated)=>{
     if(err)
       return res.status(500).send({message: `Error no se ha encontrado al artista ${err}`});
 
@@ -114,7 +114,7 @@ function uploadImage(req, res) {
     let fileName = path.basename(filePath);
 
     if(fileExtension === '.png' || fileExtension === '.jpg' || fileExtension === '.gif') {
-      Artist.findByIdAndUpdate(artistId,{ image: fileName }, (err, artistUpdated) =>{
+      Artist.findByIdAndUpdate(artistId,{ image: fileName }, {new:true}, (err, artistUpdated) =>{
         if(err || !artistUpdated )
           return res.status(500).send({message: `Error al actualizar el archivo: ${err}`});
 
