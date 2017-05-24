@@ -14,10 +14,10 @@ function saveAlbum (req, res) {
   album.title = params.title;
   album.description = params.description;
   album.year = params.year;
-  album.image = 'null';
+  album.image = null;
   album.artist = params.artist;
 
-  album.save((err, albumStored)=>{
+  album.save( (err, albumStored)=>{
     if(err) return res.status(500).send({message: `Error en el servidor: ${err}`});
     if(!albumStored) return res.status(404).send({message: 'no existe el album'});
 
