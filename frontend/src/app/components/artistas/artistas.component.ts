@@ -25,6 +25,7 @@ export class ArtistasComponent implements OnInit {
     description: null,
     image: null
   };
+  urlImageArtist = `${this.artistService.urlPpal}/get-image-artist/`;
   page: string;
   
 
@@ -65,6 +66,11 @@ export class ArtistasComponent implements OnInit {
 
   borrarArtista( idArtist ){
     this.artistService.deleteArtist( this.userToken, idArtist).subscribe();
+  }
+
+  verDetalleArtista(id){
+    // console.log(id);
+    this.router.navigate(['/detalle-artista', id])
   }
 
 }

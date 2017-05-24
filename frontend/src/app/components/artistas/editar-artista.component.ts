@@ -111,14 +111,15 @@ export class EditarArtistaComponent implements OnInit {
       if(this.filesToUpload) {
         this.uploadService.makeFileRequest(this.urlImageToUpload, this.userToken,[], this.filesToUpload, 'image')
         .then( result => {
-          console.log( 'resultado de subir el archivo', result );
+          // console.log( 'resultado de subir el archivo', result );
           // this.artist.image = result.artist.image;
+          window.location.reload(); 
         },
         error => console.log(error))
 
       }
       // la actualizacion de los datos debería ser en tiempo real y dinamica sin recarga de página
-      window.location.reload();     
+      // window.location.reload();     
        
 
       if(res.status === 200) {
@@ -141,7 +142,7 @@ export class EditarArtistaComponent implements OnInit {
   
   // recoge valor de imagen adjuntada
   setFile(fileInput: any ){
-    this.filesToUpload = fileInput.target.files;
+    this.filesToUpload = <Array<File>>fileInput.target.files;
     console.log('LOQUE SE VA A SUBIR',this.filesToUpload);
 
   }

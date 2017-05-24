@@ -26,6 +26,8 @@ import { ArtistasComponent } from './components/artistas/artistas.component';
 import { AlbumsComponent } from './components/albums/albums.component';
 import { BuscarComponent } from './components/buscar/buscar.component';
 import { ErrorPageComponent } from './components/error-page/error-page.component';
+import { NoPhotoPipe } from './pipes/no-photo.pipe';
+import { DetalleArtistaComponent } from './components/artistas/detalle-artista.component';
 
 
 @NgModule({
@@ -41,7 +43,9 @@ import { ErrorPageComponent } from './components/error-page/error-page.component
     AlbumsComponent,
     BuscarComponent,
     ErrorPageComponent,
-    EditarArtistaComponent
+    EditarArtistaComponent,
+    NoPhotoPipe,
+    DetalleArtistaComponent
   ],
   imports: [
     BrowserModule,

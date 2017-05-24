@@ -1,3 +1,29 @@
-.imgArtist {
-  max-width: 230px;
+
+.imgArtistBck {
+  height: 280px;
+  background-repeat: no-repeat;
+  background-position: center, center;
+  background-size: cover;
+
+
 }
+
+.card{
+  max-width: 318px;
+  min-width: 318px;
+  margin: 0px;
+  padding: 0px;
+}
+
+@media (min-width: 576px){
+  .card-deck .card:not(:first-child) {
+      margin-left: 0px; 
+    
+
+  }
+
+  .card-deck .card {
+    flex: inherit;
+  }
+}
+

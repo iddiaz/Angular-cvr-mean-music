@@ -9,34 +9,36 @@
   </div>
 </div>
 
-<!--cards artista-->
+
+
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-12">
-      <div class="card-deck">
+  <div class="card-deck">
 
-        <div class="card" *ngFor="let artist of artistService.artistas">
-          <img class="card-img-top imgArtist" src="./assets/noimage.png" alt="Card image cap">
-          <div class="card-block ">
-            <h4 class="card-title">{{artist.name}}</h4>
-            <p class="card-text">{{artist.description}}</p>            
-            <button *ngIf="userSession?.role == 'ROLE_ADMIN'" type="button" class="btn btn-success btn-sm m-2" (click)="editarArtista(artist._id)"><i class="fa fa-edit"></i> Editar</button>
-            <button *ngIf="userSession?.role == 'ROLE_ADMIN'" type="button" class="btn btn-danger btn-sm" (click)="borrarArtista(artist._id)"><i class="fa fa-dropbox"></i>Borrar</button>              
-            
-          </div>        
-        </div>       
+    <div class="card mb-3" *ngFor="let artist of artistService.artistas">
+      <!--<div  [ngStyle]="{'background-image': 'url(http://localhost:3000/api/get-image-artist/'+artist.image+')', width: '318px', height: '180px'} "></div>-->
+      
+      <div class="imgArtistBck" [ngStyle]="{'background-image': 'url('+ ( artist.image | noPhoto ) +')'} ">
+        <div class=" row">
+          <div class="col-8 push-5 mt-3 ">
+            <button *ngIf="userSession?.role == 'ROLE_ADMIN'" type="button" class="btn btn-success btn-sm" (click)="editarArtista(artist._id)"><i class="fa fa-edit"></i> Editar</button>
+            <button *ngIf="userSession?.role == 'ROLE_ADMIN'" type="button" class="btn btn-danger btn-sm" (click)="borrarArtista(artist._id)"><i class="fa fa-trash"></i>Borrar</button>
 
+          </div>
+        </div>
       </div>
 
+      <div class="card-block ">
+        <h4 class="card-title">{{artist.name}}</h4>
+        <p class="card-text">{{artist.description}}</p>
+        <button (click)="verDetalleArtista(artist._id)" class="btn btn-outline-primary btn-block btn-sm" type="button">Ver más info</button>
+
+      </div>
     </div>
+   
+
+
   </div>
 </div>
-
-   
-  
-
-
-
 
 
 
@@ -90,4 +92,20 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="mt-5">
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      <li class="page-item disabled">
+        <a class="page-link" href="#" tabindex="-1">Previous</a>
+      </li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item">
+        <a class="page-link" href="#">Next</a>
+      </li>
+    </ul>
+  </nav>
 </div>
