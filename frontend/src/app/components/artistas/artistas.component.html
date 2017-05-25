@@ -13,30 +13,22 @@
 
 <div class="container-fluid">
   <div class="card-deck">
-
     <div class="card mb-3" *ngFor="let artist of artistService.artistas">
-      <!--<div  [ngStyle]="{'background-image': 'url(http://localhost:3000/api/get-image-artist/'+artist.image+')', width: '318px', height: '180px'} "></div>-->
-      
-      <div class="imgArtistBck" [ngStyle]="{'background-image': 'url('+ ( artist.image | noPhoto ) +')'} ">
+      <!--<div  [ngStyle]="{'background-image': 'url(http://localhost:3000/api/get-image-artist/'+artist.image+')', width: '318px', height: '180px'} "></div>-->      
+      <div class="imgArtistBck" [ngStyle]="{'background-image': 'url('+ ( artist.image | noPhoto: 'imageArtist') +')'} ">
         <div class=" row">
           <div class="col-8 push-5 mt-3 ">
             <button *ngIf="userSession?.role == 'ROLE_ADMIN'" type="button" class="btn btn-success btn-sm" (click)="editarArtista(artist._id)"><i class="fa fa-edit"></i> Editar</button>
             <button *ngIf="userSession?.role == 'ROLE_ADMIN'" type="button" class="btn btn-danger btn-sm" (click)="borrarArtista(artist._id)"><i class="fa fa-trash"></i>Borrar</button>
-
           </div>
         </div>
       </div>
-
-      <div class="card-block ">
+      <div class="card-block">
         <h4 class="card-title">{{artist.name}}</h4>
         <p class="card-text">{{artist.description}}</p>
         <button (click)="verDetalleArtista(artist._id)" class="btn btn-outline-primary btn-block btn-sm" type="button">Ver más info</button>
-
       </div>
     </div>
-   
-
-
   </div>
 </div>
 

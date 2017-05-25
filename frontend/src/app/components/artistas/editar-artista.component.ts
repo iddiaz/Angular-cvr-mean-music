@@ -79,14 +79,13 @@ export class EditarArtistaComponent implements OnInit {
     private router: Router ) { }
 
   ngOnInit() {
-    // console.log(this.userToken);
+
     this.activatedRoute.params.subscribe(res =>{
       let idArtist = res.idArtist;
      
       this.artistService.getArtist(this.userToken, idArtist ).subscribe( res => {
         this.artist = res;
-        console.log('EL ARTISTA AL INICO',this.artist);
-       
+               
         this.urlImageToUpload = `${this.artistService.urlPpal}/upload-image-artist/${idArtist}`;
         
         if (this.artist.image){
@@ -95,8 +94,6 @@ export class EditarArtistaComponent implements OnInit {
         
       });
       
- 
-
     });
 
   }
@@ -105,14 +102,11 @@ export class EditarArtistaComponent implements OnInit {
    
     this.artistService.setUpdateArtist(this.userToken, this.artist).subscribe( res =>{
       this.artist = res.artist;
-
-      console.log(this.filesToUpload);
         
       if(this.filesToUpload) {
         this.uploadService.makeFileRequest(this.urlImageToUpload, this.userToken,[], this.filesToUpload, 'image')
         .then( result => {
-          // console.log( 'resultado de subir el archivo', result );
-          // this.artist.image = result.artist.image;
+          
           window.location.reload(); 
         },
         error => console.log(error))
