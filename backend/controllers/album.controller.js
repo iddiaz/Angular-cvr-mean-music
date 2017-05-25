@@ -63,7 +63,7 @@ function updateAlbum (req, res) {
   let albumId = req.params.albumId;
   let update = req.body;
 
-  Album.findByIdAndUpdate(albumId, update, (err, albumUpdated)=>{
+  Album.findByIdAndUpdate(albumId, update, {new:true}, (err, albumUpdated)=>{
     if(err) return res.status(500).send({message: `Error en el servidor: ${err}`});
     if(!albumUpdated) return res.status(404).send({message: 'El album no existe'});
 

@@ -18,6 +18,7 @@ import { ConfigService } from './services/config.service';
 import { AuthService } from './services/auth-service.service';
 import { ArtistService } from './services/artist.service';
 import { UploadService } from './services/upload.service';
+import { AlbumService } from './services/album.service';
 
 // Routes
 import { APP_ROUTING } from './app.routes';
@@ -59,7 +60,8 @@ import { DetalleArtistaComponent } from './components/artistas/detalle-artista.c
     ConfigService,
     AuthService,
     ArtistService,
-    UploadService
+    UploadService,
+    AlbumService
   ],
   bootstrap: [AppComponent]
 })
